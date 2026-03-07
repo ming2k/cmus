@@ -69,6 +69,7 @@ libcmus.a: $(cmus-y) file.o path.o prog.o xmalloc.o
 cdio-objs		:= ip/cdio.lo
 flac-objs		:= ip/flac.lo
 mad-objs		:= ip/mad.lo ip/nomad.lo
+mpg123-objs		:= ip/mpg123.lo
 mikmod-objs		:= ip/mikmod.lo
 modplug-objs		:= ip/modplug.lo
 bass-objs		:= ip/bass.lo
@@ -86,6 +87,7 @@ vtx-objs		:= ip/vtx.lo
 ip-$(CONFIG_CDIO)	+= ip/cdio.so
 ip-$(CONFIG_FLAC)	+= ip/flac.so
 ip-$(CONFIG_MAD)	+= ip/mad.so
+ip-$(CONFIG_MPG123)	+= ip/mpg123.so
 ip-$(CONFIG_MIKMOD)	+= ip/mikmod.so
 ip-$(CONFIG_MODPLUG)	+= ip/modplug.so
 ip-$(CONFIG_BASS)	+= ip/bass.so
@@ -103,6 +105,7 @@ ip-$(CONFIG_VTX)	+= ip/vtx.so
 $(cdio-objs):		CFLAGS += $(CDIO_CFLAGS) $(CDDB_CFLAGS)
 $(flac-objs):		CFLAGS += $(FLAC_CFLAGS)
 $(mad-objs):		CFLAGS += $(MAD_CFLAGS)
+$(mpg123-objs):		CFLAGS += $(MPG123_CFLAGS)
 $(mikmod-objs):		CFLAGS += $(MIKMOD_CFLAGS)
 $(modplug-objs):	CFLAGS += $(MODPLUG_CFLAGS)
 $(bass-objs):		CFLAGS += $(BASS_CFLAGS)
@@ -123,6 +126,9 @@ ip/flac.so: $(flac-objs) $(libcmus-y)
 
 ip/mad.so: $(mad-objs) $(libcmus-y)
 	$(call cmd,ld_dl,-lm $(MAD_LIBS) $(ICONV_LIBS))
+
+ip/mpg123.so: $(mpg123-objs) $(libcmus-y)
+	$(call cmd,ld_dl,$(MPG123_LIBS) $(ICONV_LIBS))
 
 ip/mikmod.so: $(mikmod-objs) $(libcmus-y)
 	$(call cmd,ld_dl,$(MIKMOD_LIBS))

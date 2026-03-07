@@ -273,6 +273,12 @@ check_mad()
 	return $?
 }
 
+check_mpg123()
+{
+	pkg_config MPG123 "libmpg123" "" "-lmpg123"
+	return $?
+}
+
 mikmod_code="
 #include <mikmod.h>
 int main() {
@@ -582,6 +588,7 @@ Optional Features: y/n
   CONFIG_FLAC           Free Lossless Audio Codec (.flac, .fla)         [auto]
   CONFIG_JACK           JACK                                            [auto]
   CONFIG_MAD            MPEG Audio Decoder (.mp3, .mp2, streams)        [auto]
+  CONFIG_MPG123         mpg123 MPEG audio decoder (.mp3, .mp2)          [auto]
   CONFIG_MIKMOD         libmikmod (.mod, .x3m, ...)                     [n]
   CONFIG_BASS           libbass (.mod, .x3m, ...)                       [n]
   CONFIG_MODPLUG        libmodplug (.mod, .x3m, ...)                    [auto]
@@ -646,6 +653,7 @@ check check_cddb       CONFIG_CDDB
 check check_cdio       CONFIG_CDIO
 check check_flac       CONFIG_FLAC
 check check_mad        CONFIG_MAD
+check check_mpg123     CONFIG_MPG123
 check check_mikmod     CONFIG_MIKMOD
 check check_modplug    CONFIG_MODPLUG
 check check_bass       CONFIG_BASS
@@ -713,7 +721,7 @@ makefile_vars bindir datadir libdir mandir docdir exampledir
 makefile_vars \
 	CONFIG_AAC CONFIG_ALSA CONFIG_AO CONFIG_ARTS CONFIG_CDIO \
 	CONFIG_COREAUDIO CONFIG_CUE CONFIG_FFMPEG CONFIG_FLAC CONFIG_JACK \
-	CONFIG_MAD CONFIG_MIKMOD CONFIG_MODPLUG CONFIG_MP4 CONFIG_MPC \
+	CONFIG_MAD CONFIG_MPG123 CONFIG_MIKMOD CONFIG_MODPLUG CONFIG_MP4 CONFIG_MPC \
 	CONFIG_MPRIS CONFIG_OPUS CONFIG_OSS CONFIG_PULSE CONFIG_ROAR \
 	CONFIG_SAMPLERATE CONFIG_SNDIO CONFIG_SUN CONFIG_VORBIS CONFIG_VTX \
 	CONFIG_WAV CONFIG_WAVEOUT CONFIG_WAVPACK CONFIG_BASS CONFIG_AAUDIO

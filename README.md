@@ -20,17 +20,43 @@ also available.
 After running configure you can see from the generated `config.mk` file
 what features have been configured in (see the `CONFIG_*` options).
 
-The packages containing dependencies on common distributions are listed below. All dependencies other than pkg-config and ncurses, iconv, and elogind/systemd are for optional input/output plugins. It is assumed that libc headers, a C compiler, git, and GNU Make are available.
+**Required:** pkg-config, ncurses (wide character support recommended), iconv, C compiler, git, GNU Make
 
-| Distro            | Dependencies |
-| :--               | :--          |
-| **Debian/Ubuntu** | apt install pkg-config libncursesw5-dev libfaad-dev libao-dev libasound2-dev libcddb2-dev libcdio-cdda-dev libdiscid-dev libavformat-dev libavcodec-dev libswresample-dev libflac-dev libjack-dev libmad0-dev libmodplug-dev libmpcdec-dev libsystemd-dev libopusfile-dev libpulse-dev libsamplerate0-dev libsndio-dev libvorbis-dev libwavpack-dev |
-| **Fedora/RHEL**   | dnf install 'pkgconfig(ncursesw)' 'pkgconfig(alsa)' 'pkgconfig(ao)' 'pkgconfig(libcddb)' 'pkgconfig(libcdio_cdda)' 'pkgconfig(libdiscid)' 'pkgconfig(libavformat)' 'pkgconfig(libavcodec)' 'pkgconfig(libswresample)' 'pkgconfig(flac)' 'pkgconfig(jack)' 'pkgconfig(mad)' 'pkgconfig(libmodplug)' libmpcdec-devel 'pkgconfig(libsystemd)' 'pkgconfig(opusfile)' 'pkgconfig(libpulse)' 'pkgconfig(samplerate)' 'pkgconfig(vorbisfile)' 'pkgconfig(wavpack)' |
-| **+ RPMFusion**   | dnf install faad2-devel libmp4v2-devel |
-| **Arch Linux**    | pacman -S pkg-config ncurses libiconv faad2 alsa-lib libao libcddb libcdio-paranoia libdiscid ffmpeg flac jack libmad libmodplug libmp4v2 libmpcdec systemd opusfile libpulse libsamplerate libvorbis wavpack |
-| **Alpine**        | apk add pkgconf ncurses-dev gnu-libiconv-dev alsa-lib-dev libao-dev libcddb-dev ffmpeg-dev flac-dev jack-dev libmad-dev libmodplug-dev elogind-dev opus-dev opusfile-dev pulseaudio-dev libsamplerate-dev libvorbis-dev wavpack-dev |
-| **Termux**        | apt install libandroid-support ncurses libiconv ffmpeg libmad libmodplug opusfile pulseaudio libflac libvorbis libwavpack |
-| **Homebrew**      | brew install pkg-config ncurses faad2 libao libcddb libcdio libdiscid ffmpeg flac jack mad libmodplug mp4v2 musepack opusfile libsamplerate libvorbis wavpack |
+**Optional input plugins:**
+
+- FLAC — libflac
+- MAD — libmad
+- mpg123 — libmpg123
+- Ogg/Vorbis — libvorbis, libogg
+- Opus — opusfile
+- FFmpeg — libavformat, libavcodec, libswresample, libavutil
+- FAAD2 — libfaad (AAC)
+- MP4 — libmp4v2, libfaad
+- Musepack — libmpcdec
+- WavPack — libwavpack
+- libmodplug
+- libmikmod
+- BASS — libbass
+- libcdio (CDDA)
+- libayemu (VTX)
+
+**Optional output plugins:**
+
+- ALSA — libasound
+- PulseAudio — libpulse
+- JACK — libjack (optionally libsamplerate)
+- sndio — libsndio
+- OSS
+- CoreAudio (macOS)
+- libao
+- aRts — libartsc
+- AAudio (Android)
+
+**Optional features:**
+
+- MPRIS — libsystemd / libelogind / basu
+- CDDB — libcddb
+- libdiscid
 
 
 ## Building
