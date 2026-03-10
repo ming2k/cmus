@@ -172,6 +172,7 @@ ip/vtx.so: $(vtx-objs) $(libcmus-y)
 # }}}
 
 # output plugins {{{
+pipewire-objs		:= op/pipewire.lo
 pulse-objs		:= op/pulse.lo
 alsa-objs		:= op/alsa.lo op/mixer_alsa.lo
 jack-objs		:= op/jack.lo
@@ -185,6 +186,7 @@ waveout-objs		:= op/waveout.lo
 roar-objs               := op/roar.lo
 aaudio-objs		:= op/aaudio.lo
 
+op-$(CONFIG_PIPEWIRE)	+= op/pipewire.so
 op-$(CONFIG_PULSE)	+= op/pulse.so
 op-$(CONFIG_ALSA)	+= op/alsa.so
 op-$(CONFIG_JACK)	+= op/jack.so
@@ -198,6 +200,7 @@ op-$(CONFIG_WAVEOUT)	+= op/waveout.so
 op-$(CONFIG_ROAR)       += op/roar.so
 op-$(CONFIG_AAUDIO)	+= op/aaudio.so
 
+$(pipewire-objs): CFLAGS	+= $(PIPEWIRE_CFLAGS)
 $(pulse-objs): CFLAGS		+= $(PULSE_CFLAGS)
 $(alsa-objs): CFLAGS		+= $(ALSA_CFLAGS)
 $(jack-objs): CFLAGS		+= $(JACK_CFLAGS) $(SAMPLERATE_CFLAGS)
@@ -210,6 +213,9 @@ $(coreaudio-objs): CFLAGS	+= $(COREAUDIO_CFLAGS)
 $(waveout-objs): CFLAGS 	+= $(WAVEOUT_CFLAGS)
 $(roar-objs): CFLAGS		+= $(ROAR_CFLAGS)
 $(aaudio-objs): CFLAGS		+= $(AAUDIO_CFLAGS)
+
+op/pipewire.so: $(pipewire-objs) $(libcmus-y)
+	$(call cmd,ld_dl,$(PIPEWIRE_LIBS))
 
 op/pulse.so: $(pulse-objs) $(libcmus-y)
 	$(call cmd,ld_dl,$(PULSE_LIBS))

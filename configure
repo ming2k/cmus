@@ -353,6 +353,12 @@ check_wavpack()
 	return $?
 }
 
+check_pipewire()
+{
+	pkg_config PIPEWIRE "libpipewire-0.3 >= 0.3.0"
+	return $?
+}
+
 check_pulse()
 {
 	pkg_config PULSE "libpulse >= 0.9.19"
@@ -597,6 +603,7 @@ Optional Features: y/n
   CONFIG_MPRIS          MPRIS                                           [auto]
   CONFIG_OPUS           Opus (.opus)                                    [auto]
   CONFIG_OSS            Open Sound System                               [auto]
+  CONFIG_PIPEWIRE       native PipeWire output                          [auto]
   CONFIG_PULSE          native PulseAudio output                        [auto]
   CONFIG_ROAR           native RoarAudio output                         [auto]
   CONFIG_SAMPLERATE     Use libsamplerate to resample to JACK's rate    [auto]
@@ -670,6 +677,7 @@ check check_vtx        CONFIG_VTX
 check true             CONFIG_TREMOR
 check true             CONFIG_WAV
 check true             CONFIG_CUE
+check check_pipewire   CONFIG_PIPEWIRE
 check check_pulse      CONFIG_PULSE
 check check_alsa       CONFIG_ALSA
 check check_jack       CONFIG_JACK
@@ -722,7 +730,7 @@ makefile_vars \
 	CONFIG_AAC CONFIG_ALSA CONFIG_AO CONFIG_ARTS CONFIG_CDIO \
 	CONFIG_COREAUDIO CONFIG_CUE CONFIG_FFMPEG CONFIG_FLAC CONFIG_JACK \
 	CONFIG_MAD CONFIG_MPG123 CONFIG_MIKMOD CONFIG_MODPLUG CONFIG_MP4 CONFIG_MPC \
-	CONFIG_MPRIS CONFIG_OPUS CONFIG_OSS CONFIG_PULSE CONFIG_ROAR \
+	CONFIG_MPRIS CONFIG_OPUS CONFIG_OSS CONFIG_PIPEWIRE CONFIG_PULSE CONFIG_ROAR \
 	CONFIG_SAMPLERATE CONFIG_SNDIO CONFIG_SUN CONFIG_VORBIS CONFIG_VTX \
 	CONFIG_WAV CONFIG_WAVEOUT CONFIG_WAVPACK CONFIG_BASS CONFIG_AAUDIO
 
