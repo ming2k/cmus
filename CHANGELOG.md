@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.1
+
+### New Features
+
+- Add PipeWire output plugin for native PipeWire audio support
+
 ## v3.0.0
 
 ### New Features
