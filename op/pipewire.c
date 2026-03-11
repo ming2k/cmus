@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdatomic.h>
 #include <string.h>
 #include <errno.h>
 
@@ -39,7 +40,7 @@ static char *pw_buf;
 static size_t pw_buf_size;
 static size_t pw_buf_rpos;   /* read position */
 static size_t pw_buf_wpos;   /* write position */
-static size_t pw_buf_avail;  /* bytes available for reading */
+static atomic_size_t pw_buf_avail;  /* bytes available for reading */
 
 /* volume */
 static float pw_vol_l = 1.0f;
@@ -109,12 +110,12 @@ static enum spa_audio_channel convert_channel_position(channel_position_t p)
 
 static size_t pw_buf_readable(void)
 {
-	return pw_buf_avail;
+	return atomic_load_explicit(&pw_buf_avail, memory_order_acquire);
 }
 
 static size_t pw_buf_writable(void)
 {
-	return pw_buf_size - pw_buf_avail;
+	return pw_buf_size - atomic_load_explicit(&pw_buf_avail, memory_order_acquire);
 }
 
 static size_t pw_buf_read(char *dst, size_t count)
@@ -131,7 +132,7 @@ static size_t pw_buf_read(char *dst, size_t count)
 		memcpy(dst + to_end, pw_buf, count - to_end);
 	}
 	pw_buf_rpos = (pw_buf_rpos + count) % pw_buf_size;
-	pw_buf_avail -= count;
+	atomic_fetch_sub_explicit(&pw_buf_avail, count, memory_order_release);
 	return count;
 }
 
@@ -149,7 +150,7 @@ static size_t pw_buf_write(const char *src, size_t count)
 		memcpy(pw_buf, src + to_end, count - to_end);
 	}
 	pw_buf_wpos = (pw_buf_wpos + count) % pw_buf_size;
-	pw_buf_avail += count;
+	atomic_fetch_add_explicit(&pw_buf_avail, count, memory_order_release);
 	return count;
 }
 
@@ -291,7 +292,7 @@ static int op_pw_open(sample_format_t sf, const channel_position_t *cmap)
 	pw_buf = xmalloc(pw_buf_size);
 	pw_buf_rpos = 0;
 	pw_buf_wpos = 0;
-	pw_buf_avail = 0;
+	atomic_store_explicit(&pw_buf_avail, 0, memory_order_release);
 	pw_paused = 0;
 
 	pw_thread_loop_lock(pw_loop);
@@ -376,7 +377,7 @@ static int op_pw_close(void)
 	pw_buf = NULL;
 	pw_buf_rpos = 0;
 	pw_buf_wpos = 0;
-	pw_buf_avail = 0;
+	atomic_store_explicit(&pw_buf_avail, 0, memory_order_release);
 
 	return OP_ERROR_SUCCESS;
 }
@@ -387,7 +388,7 @@ static int op_pw_drop(void)
 
 	pw_buf_rpos = 0;
 	pw_buf_wpos = 0;
-	pw_buf_avail = 0;
+	atomic_store_explicit(&pw_buf_avail, 0, memory_order_release);
 
 	if (pw_s)
 		pw_stream_flush(pw_s, false);

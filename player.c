@@ -308,7 +308,7 @@ static void scale_samples(char *buffer, unsigned int *countp)
 	BUG_ON(scale_pos < consumer_pos);
 
 	if (consumer_pos != scale_pos) {
-		unsigned int offs = scale_pos - consumer_pos;
+		unsigned long offs = scale_pos - consumer_pos;
 
 		if (offs >= count)
 			return;
