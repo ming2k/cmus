@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.0.2
+
+### Changes
+
+- Remove PulseAudio output plugin, keep PipeWire as the native replacement
+- Add PipeWire to CI build dependencies
+- Update documentation to reflect PipeWire replacing PulseAudio
+
 ## v3.0.1
 
 ### New Features
