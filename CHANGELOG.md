@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.0.3
+
+### Bug Fixes
+
+- Fix 32-bit integer overflow in scale_samples() causing playback repetition and stuttering after extended playback
+- Fix race condition on PipeWire ring buffer availability counter by using atomic operations
+
 ## v3.0.2
 
 ### Changes
