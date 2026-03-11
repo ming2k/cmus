@@ -917,12 +917,11 @@ static void *consumer_loop(void *arg)
 						consumer_unlock();
 						break;
 					} else {
-						/* possible underrun */
+						/* possible underrun — wait for producer to fill data */
 						producer_unlock();
 						_consumer_position_update();
 						consumer_unlock();
-/* 						d_print("possible underrun\n"); */
-						ms_sleep(10);
+						buffer_wait_fill();
 						break;
 					}
 				}
@@ -982,9 +981,9 @@ static void *producer_loop(void *arg)
 		for (i = 0; ; i++) {
 			size = buffer_get_wpos(&wpos);
 			if (size == 0) {
-				/* buffer is full */
+				/* buffer is full — wait for consumer to drain */
 				producer_unlock();
-				ms_sleep(50);
+				buffer_wait_drain();
 				break;
 			}
 			nr_read = ip_read(ip, wpos, size);
