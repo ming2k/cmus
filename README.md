@@ -43,7 +43,7 @@ what features have been configured in (see the `CONFIG_*` options).
 **Optional output plugins:**
 
 - ALSA — libasound
-- PulseAudio — libpulse
+- PipeWire — libpipewire-0.3
 - JACK — libjack (optionally libsamplerate)
 - sndio — libsndio
 - OSS

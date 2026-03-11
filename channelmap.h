@@ -23,7 +23,7 @@
 
 #define CHANNELS_MAX 32
 
-/* Modelled after PulseAudio */
+/* Standard channel position definitions */
 enum channel_position {
 	CHANNEL_POSITION_INVALID = -1,
 	CHANNEL_POSITION_MONO = 0,

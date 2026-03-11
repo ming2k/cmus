@@ -1146,7 +1146,7 @@ mpris (true)
 
 	Note: This flag has no effect if cmus was compiled without MPRIS support.
 
-output_plugin [roar, pulse, alsa, arts, oss, sndio, sun, coreaudio, aaudio]
+output_plugin [roar, pipewire, alsa, arts, oss, sndio, sun, coreaudio, aaudio]
 	Name of output plugin.
 
 passwd [`password`]
@@ -1157,7 +1157,7 @@ passwd [`password`]
 pause_on_output_change (false)
 	Pauses playback when the audio output changes.
 
-	Supported output plugins: pulse, aaudio.
+	Supported output plugins: aaudio.
 
 pl_env_vars
 	Comma separated list of environment variables to substitute when saving
@@ -1458,11 +1458,6 @@ mixer.alsa.channel
 
 mixer.alsa.device
 	Mixer device for ALSA plugin, usually "default".
-
-mixer.pulse.restore_volume
-	Restore the volume at startup using PulseAudio. Otherwise, cmus sets
-	the volume to 100%, which does not mix well with "flat volumes"
-	feature of PA. Defaults to "1"; set to "0" to turn off.
 
 dsp.ao.buffer_size
 	The audio buffer size; defaults to 16kB, but you may want to try bigger

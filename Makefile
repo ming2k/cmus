@@ -21,8 +21,8 @@ CFLAGS += -D_FILE_OFFSET_BITS=64
 CMUS_LIBS = $(PTHREAD_LIBS) $(NCURSES_LIBS) $(ICONV_LIBS) $(DL_LIBS) $(DISCID_LIBS) \
 			-lm $(COMPAT_LIBS) $(LIBSYSTEMD_LIBS)
 
-command_mode.o input.o main.o ui_curses.o op/pulse.lo: .version
-command_mode.o input.o main.o ui_curses.o op/pulse.lo: CFLAGS += -DVERSION=\"$(VERSION)\"
+command_mode.o input.o main.o ui_curses.o: .version
+command_mode.o input.o main.o ui_curses.o: CFLAGS += -DVERSION=\"$(VERSION)\"
 main.o server.o: CFLAGS += -DDEFAULT_PORT=3000
 discid.o: CFLAGS += $(DISCID_CFLAGS)
 mpris.o: CFLAGS += $(LIBSYSTEMD_CFLAGS)
@@ -173,7 +173,6 @@ ip/vtx.so: $(vtx-objs) $(libcmus-y)
 
 # output plugins {{{
 pipewire-objs		:= op/pipewire.lo
-pulse-objs		:= op/pulse.lo
 alsa-objs		:= op/alsa.lo op/mixer_alsa.lo
 jack-objs		:= op/jack.lo
 arts-objs		:= op/arts.lo
@@ -187,7 +186,6 @@ roar-objs               := op/roar.lo
 aaudio-objs		:= op/aaudio.lo
 
 op-$(CONFIG_PIPEWIRE)	+= op/pipewire.so
-op-$(CONFIG_PULSE)	+= op/pulse.so
 op-$(CONFIG_ALSA)	+= op/alsa.so
 op-$(CONFIG_JACK)	+= op/jack.so
 op-$(CONFIG_ARTS)	+= op/arts.so
@@ -201,7 +199,6 @@ op-$(CONFIG_ROAR)       += op/roar.so
 op-$(CONFIG_AAUDIO)	+= op/aaudio.so
 
 $(pipewire-objs): CFLAGS	+= $(PIPEWIRE_CFLAGS)
-$(pulse-objs): CFLAGS		+= $(PULSE_CFLAGS)
 $(alsa-objs): CFLAGS		+= $(ALSA_CFLAGS)
 $(jack-objs): CFLAGS		+= $(JACK_CFLAGS) $(SAMPLERATE_CFLAGS)
 $(arts-objs): CFLAGS		+= $(ARTS_CFLAGS)
@@ -216,9 +213,6 @@ $(aaudio-objs): CFLAGS		+= $(AAUDIO_CFLAGS)
 
 op/pipewire.so: $(pipewire-objs) $(libcmus-y)
 	$(call cmd,ld_dl,$(PIPEWIRE_LIBS))
-
-op/pulse.so: $(pulse-objs) $(libcmus-y)
-	$(call cmd,ld_dl,$(PULSE_LIBS))
 
 op/alsa.so: $(alsa-objs) $(libcmus-y)
 	$(call cmd,ld_dl,$(ALSA_LIBS) -lm)

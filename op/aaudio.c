@@ -916,5 +916,5 @@ const struct mixer_plugin_opt op_mixer_options[] = {
 	{ NULL },
 };
 
-const int op_priority = -3; // higher priority than pulse (-2)
+const int op_priority = -3;
 const unsigned op_abi_version = OP_ABI_VERSION;
