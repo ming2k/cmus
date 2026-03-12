@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.4
+
+### Improvements
+
+- Replace sleep-based polling with condition variable signaling
+
 ## v3.0.3
 
 ### Bug Fixes
